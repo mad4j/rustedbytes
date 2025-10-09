@@ -1,0 +1,24 @@
+# Configuration for page generation
+# This file controls the Jekyll theme and layout settings
+
+# Jekyll layout to use in the generated markdown front matter
+# Options: 'default', 'minimal', 'custom', or any layout defined in _layouts/
+layout: default
+
+# Jekyll theme to use (defined in _config.yml)
+# Options: 'minima', 'cayman', 'slate', or any supported Jekyll theme
+# Set to null to use custom layouts only
+theme: minima
+
+# Custom styling options for the generated page
+styling:
+  # Primary color scheme (for custom layouts)
+  primary_color: "#667eea"
+  secondary_color: "#764ba2"
+  
+  # Page title and description
+  page_title: "Rustedbytes Projects"
+  page_description: "A collection of Rust-based projects"
+  
+  # Header emoji (set to empty string to disable)
+  header_emoji: "🦀"
