@@ -21,4 +21,4 @@ styling:
   page_description: "A collection of Rust-based projects"
   
   # Header emoji (set to empty string to disable)
-  header_emoji: "🦀"
+  header_emoji: ""
