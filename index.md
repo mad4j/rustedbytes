@@ -3,7 +3,7 @@ layout: professional
 title: Rustedbytes Projects
 ---
 
-# 🦀 Rustedbytes Projects
+# Rustedbytes Projects
 
 A collection of Rust-based projects
 
@@ -34,4 +34,4 @@ Each project is built with Rust, focusing on performance, reliability, and devel
 
 *Generated from [@mad4j](https://github.com/mad4j) GitHub repositories*
 
-*Last updated: 2025-10-09 16:17:31 UTC*
+*Last updated: 2025-10-09 18:48:51 UTC*
