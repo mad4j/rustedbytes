@@ -37,8 +37,8 @@ You can manually trigger the page generation from the GitHub Actions tab by runn
 The page design is configurable via the `page_config.yml` file:
 
 ```yaml
-# Choose from available layouts: 'default' or 'minimal'
-layout: default
+# Choose from available layouts: 'default', 'minimal', or 'professional'
+layout: professional
 
 # Customize page content
 styling:
@@ -50,6 +50,7 @@ styling:
 Available layouts:
 - **default**: Modern gradient design with purple/blue theme
 - **minimal**: Terminal-style dark theme with green accents
+- **professional**: Clean and minimal design with LinkedIn-style professional appearance
 
 You can also create custom layouts by adding new HTML files to the `_layouts/` directory. See [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md) for detailed customization instructions.
 

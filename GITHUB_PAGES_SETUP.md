@@ -151,19 +151,20 @@ You can also override settings using environment variables in the workflow:
 
 - `default`: Modern gradient design with purple/blue theme
 - `minimal`: Terminal-style dark theme with green accents
+- `professional`: Clean and minimal design with LinkedIn-style professional appearance
 - Create your own by adding files to `_layouts/` directory
 
 **Option 2: Create custom layouts**
 
 Create a new file in `_layouts/` directory (e.g., `_layouts/custom.html`):
 
-- Copy from an existing layout (default.html or minimal.html)
+- Copy from an existing layout (default.html, minimal.html, or professional.html)
 - Modify the HTML structure and CSS styles
 - Set `layout: custom` in `page_config.yml`
 
 **Option 3: Edit existing layouts**
 
-Edit `_layouts/default.html` or `_layouts/minimal.html`:
+Edit `_layouts/default.html`, `_layouts/minimal.html`, or `_layouts/professional.html`:
 
 - Modify the HTML structure
 - Update the CSS styles in the `<style>` tag
