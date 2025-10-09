@@ -30,6 +30,20 @@ styling:
   header_emoji: "🦀"
 ```
 
+## Using the Professional Layout
+
+The professional layout uses a clean, minimal design with LinkedIn-style professional appearance. Ideal for showcasing on professional profiles.
+
+**page_config.yml:**
+```yaml
+layout: professional
+theme: minima
+styling:
+  page_title: "Rustedbytes Projects"
+  page_description: "A collection of Rust-based projects"
+  header_emoji: "🦀"
+```
+
 ## Using Environment Variables
 
 You can override configuration settings using environment variables in the GitHub Actions workflow.

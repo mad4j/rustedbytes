@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: professional
 title: Rustedbytes Projects
 ---
 

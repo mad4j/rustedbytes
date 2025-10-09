@@ -2,8 +2,8 @@
 # This file controls the Jekyll theme and layout settings
 
 # Jekyll layout to use in the generated markdown front matter
-# Options: 'default', 'minimal', 'custom', or any layout defined in _layouts/
-layout: default
+# Options: 'default', 'minimal', 'professional', 'custom', or any layout defined in _layouts/
+layout: professional
 
 # Jekyll theme to use (defined in _config.yml)
 # Options: 'minima', 'cayman', 'slate', or any supported Jekyll theme
