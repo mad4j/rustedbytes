@@ -21,12 +21,13 @@ This repository automatically generates a static web page that showcases all pro
 3. For each repository:
    - Retrieves the latest GitHub release
    - Checks crates.io for published versions
-4. Generates a static HTML page with all the information
-5. Deploys to GitHub Pages
+4. Generates a Jekyll-compatible Markdown page with all the information
+5. GitHub Pages processes the Markdown using Jekyll
+6. Deploys the generated site to GitHub Pages
 
 ## Manual Trigger
 
-You can manually trigger the page generation from the GitHub Actions tab by running the "Generate Static Page" workflow.
+You can manually trigger the page generation from the GitHub Actions tab by running the "Generate Static Page with Jekyll" workflow.
 
 ## Local Development
 
@@ -43,7 +44,19 @@ export GITHUB_TOKEN=your_token_here
 python3 scripts/generate_page.py
 ```
 
-The generated page will be in `docs/index.html`.
+The generated page will be in `index.md` (a Jekyll-compatible Markdown file).
+
+To preview the site locally with Jekyll:
+
+```bash
+# Install Jekyll (if not already installed)
+gem install bundler jekyll
+
+# Serve the site locally
+jekyll serve
+
+# Open http://localhost:4000 in your browser
+```
 
 ## License
 
