@@ -98,13 +98,13 @@ def format_date(date_str: str) -> str:
         return date_str
 
 
-def generate_html(projects: List[Dict]) -> str:
-    """Generate HTML page from project data."""
+def generate_markdown(projects: List[Dict]) -> str:
+    """Generate Jekyll-compatible Markdown page from project data."""
     
     # Sort projects by name
     projects = sorted(projects, key=lambda x: x["name"])
     
-    # Generate project rows
+    # Generate project rows in Markdown table format
     project_rows = []
     for project in projects:
         name = project["name"]
@@ -117,9 +117,9 @@ def generate_html(projects: List[Dict]) -> str:
             release_tag = github_release.get("tag_name", "N/A")
             release_date = format_date(github_release.get("published_at", ""))
             release_url = github_release.get("html_url", html_url)
-            github_release_cell = f'<a href="{release_url}">{release_tag}</a> ({release_date})'
+            github_release_cell = f'[{release_tag}]({release_url}) ({release_date})'
         else:
-            github_release_cell = '<span class="no-data">No releases</span>'
+            github_release_cell = '_No releases_'
         
         # Crates.io info
         crates_info = project.get("crates_info")
@@ -128,210 +128,46 @@ def generate_html(projects: List[Dict]) -> str:
             latest_version = crate.get("newest_version", "N/A")
             crate_name = crate.get("name", name)
             crates_url = f"https://crates.io/crates/{crate_name}"
-            crates_cell = f'<a href="{crates_url}">{latest_version}</a>'
+            crates_cell = f'[{latest_version}]({crates_url})'
         else:
-            crates_cell = '<span class="no-data">Not published</span>'
+            crates_cell = '_Not published_'
         
-        project_rows.append(f"""
-        <tr>
-            <td><a href="{html_url}"><strong>{name}</strong></a></td>
-            <td>{description}</td>
-            <td>{github_release_cell}</td>
-            <td>{crates_cell}</td>
-        </tr>
-        """)
+        # Escape pipe characters in description to avoid breaking table
+        description = description.replace("|", "\\|") if description else "No description available"
+        
+        project_rows.append(f'| [**{name}**]({html_url}) | {description} | {github_release_cell} | {crates_cell} |')
     
-    projects_html = "\n".join(project_rows)
+    projects_table = "\n".join(project_rows)
     
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rustedbytes Projects</title>
-    <style>
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }}
-        
-        body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 2rem;
-        }}
-        
-        .container {{
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }}
-        
-        header {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }}
-        
-        header h1 {{
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }}
-        
-        header p {{
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }}
-        
-        .intro {{
-            padding: 2rem;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-        }}
-        
-        .intro p {{
-            font-size: 1.1rem;
-            color: #495057;
-            margin-bottom: 1rem;
-        }}
-        
-        .content {{
-            padding: 2rem;
-        }}
-        
-        table {{
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }}
-        
-        th {{
-            background: #667eea;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #5568d3;
-        }}
-        
-        td {{
-            padding: 1rem;
-            border-bottom: 1px solid #e9ecef;
-        }}
-        
-        tr:hover {{
-            background: #f8f9fa;
-        }}
-        
-        a {{
-            color: #667eea;
-            text-decoration: none;
-            transition: color 0.2s;
-        }}
-        
-        a:hover {{
-            color: #764ba2;
-            text-decoration: underline;
-        }}
-        
-        .no-data {{
-            color: #6c757d;
-            font-style: italic;
-        }}
-        
-        footer {{
-            padding: 2rem;
-            text-align: center;
-            color: #6c757d;
-            background: #f8f9fa;
-            border-top: 1px solid #e9ecef;
-        }}
-        
-        footer a {{
-            color: #667eea;
-            font-weight: 600;
-        }}
-        
-        .update-time {{
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-top: 0.5rem;
-        }}
-        
-        @media (max-width: 768px) {{
-            body {{
-                padding: 1rem;
-            }}
-            
-            header h1 {{
-                font-size: 1.8rem;
-            }}
-            
-            table {{
-                font-size: 0.9rem;
-            }}
-            
-            th, td {{
-                padding: 0.75rem 0.5rem;
-            }}
-        }}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🦀 Rustedbytes Projects</h1>
-            <p>A collection of Rust-based projects</p>
-        </header>
-        
-        <div class="intro">
-            <p>
-                Welcome to the Rustedbytes project collection! This page provides an overview of all 
-                projects in the rustedbytes ecosystem, including their latest releases on GitHub and 
-                crates.io availability.
-            </p>
-            <p>
-                Each project is built with Rust, focusing on performance, reliability, and developer experience.
-            </p>
-        </div>
-        
-        <div class="content">
-            <h2>Projects</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Project</th>
-                        <th>Description</th>
-                        <th>Latest Release</th>
-                        <th>Crates.io</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {projects_html}
-                </tbody>
-            </table>
-        </div>
-        
-        <footer>
-            <p>
-                Generated from <a href="https://github.com/{GITHUB_USER}" target="_blank">@{GITHUB_USER}</a> GitHub repositories
-            </p>
-            <p class="update-time">Last updated: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")}</p>
-        </footer>
-    </div>
-</body>
-</html>
+    # Generate Jekyll front matter and Markdown content
+    markdown = f"""---
+layout: default
+title: Rustedbytes Projects
+---
+
+# 🦀 Rustedbytes Projects
+
+A collection of Rust-based projects
+
+---
+
+Welcome to the Rustedbytes project collection! This page provides an overview of all projects in the rustedbytes ecosystem, including their latest releases on GitHub and crates.io availability.
+
+Each project is built with Rust, focusing on performance, reliability, and developer experience.
+
+## Projects
+
+| Project | Description | Latest Release | Crates.io |
+|---------|-------------|----------------|-----------|
+{projects_table}
+
+---
+
+*Generated from [@{GITHUB_USER}](https://github.com/{GITHUB_USER}) GitHub repositories*
+
+*Last updated: {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")}*
 """
-    return html
+    return markdown
 
 
 def main():
@@ -371,15 +207,14 @@ def main():
         
         projects.append(project_data)
     
-    # Generate HTML
-    print("Generating HTML...")
-    html = generate_html(projects)
+    # Generate Markdown
+    print("Generating Markdown...")
+    markdown = generate_markdown(projects)
     
     # Write to file
-    output_path = "docs/index.html"
-    os.makedirs("docs", exist_ok=True)
+    output_path = "index.md"
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(html)
+        f.write(markdown)
     
     print(f"Page generated successfully: {output_path}")
     print(f"Total projects: {len(projects)}")
