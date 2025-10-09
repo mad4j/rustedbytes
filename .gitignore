@@ -1,6 +1,13 @@
 # Generated documentation (will be created by GitHub Actions)
 docs/
 
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+index.md
+
 # Python
 __pycache__/
 *.py[cod]
