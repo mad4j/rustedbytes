@@ -36,8 +36,9 @@ This document explains how to enable GitHub Pages for the rustedbytes project.
      1. Fetch all rustedbytes repositories
      2. Collect release information
      3. Check crates.io for versions
-     4. Generate the HTML page
-     5. Deploy to GitHub Pages
+     4. Generate a Jekyll-compatible Markdown page
+     5. Process the page with Jekyll
+     6. Deploy to GitHub Pages
    - This usually takes 1-2 minutes
 
 7. **Access Your Page**
@@ -112,18 +113,38 @@ Examples:
 
 ### Modify Page Design
 
+The page design can be customized in two places:
+
+**Option 1: Edit the Jekyll layout**
+
+Edit `_layouts/default.html`:
+
+- Modify the HTML structure
+- Update the CSS styles in the `<style>` tag
+- Colors, fonts, and layout can all be customized
+
+**Option 2: Edit the Markdown generation**
+
 Edit `scripts/generate_page.py`:
 
-- Find the `generate_html()` function
-- Modify the HTML and CSS in the template string
-- Colors, fonts, layout can all be customized
+- Find the `generate_markdown()` function
+- Modify the Markdown template
+- Change the structure and content of the generated page
+
+**Option 3: Customize Jekyll configuration**
+
+Edit `_config.yml`:
+
+- Change the theme (currently using minima)
+- Add Jekyll plugins
+- Customize site metadata
 
 ### Add More Data Sources
 
 Edit `scripts/generate_page.py`:
 
 - Add new API calls in the `main()` function
-- Modify `generate_html()` to display the new data
+- Modify `generate_markdown()` to display the new data in Markdown format
 
 ## Support
 
