@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import requests
+import yaml
 from datetime import datetime
 from typing import List, Dict, Optional
 
@@ -17,10 +18,56 @@ REPO_PREFIX = "rustedbytes"
 GITHUB_API_BASE = "https://api.github.com"
 CRATES_API_BASE = "https://crates.io/api/v1"
 
+# Default page configuration
+DEFAULT_PAGE_CONFIG = {
+    "layout": "default",
+    "theme": "minima",
+    "styling": {
+        "page_title": "Rustedbytes Projects",
+        "page_description": "A collection of Rust-based projects",
+        "header_emoji": "🦀"
+    }
+}
+
 
 def get_github_token() -> Optional[str]:
     """Get GitHub token from environment."""
     return os.environ.get("GITHUB_TOKEN")
+
+
+def load_page_config(config_path: str = "page_config.yml") -> Dict:
+    """Load page configuration from YAML file or environment variables.
+    
+    Environment variables take precedence over config file:
+    - PAGE_LAYOUT: Override the layout setting
+    - PAGE_THEME: Override the theme setting
+    - PAGE_TITLE: Override the page title
+    """
+    config = DEFAULT_PAGE_CONFIG.copy()
+    
+    # Try to load from YAML file
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                file_config = yaml.safe_load(f)
+                if file_config:
+                    # Deep merge the configuration
+                    config.update(file_config)
+                    if "styling" in file_config and "styling" in config:
+                        config["styling"].update(file_config["styling"])
+        except Exception as e:
+            print(f"Warning: Could not load config file {config_path}: {e}", file=sys.stderr)
+            print("Using default configuration.", file=sys.stderr)
+    
+    # Override with environment variables if present
+    if os.environ.get("PAGE_LAYOUT"):
+        config["layout"] = os.environ.get("PAGE_LAYOUT")
+    if os.environ.get("PAGE_THEME"):
+        config["theme"] = os.environ.get("PAGE_THEME")
+    if os.environ.get("PAGE_TITLE"):
+        config["styling"]["page_title"] = os.environ.get("PAGE_TITLE")
+    
+    return config
 
 
 def fetch_repos_with_prefix(user: str, prefix: str, token: Optional[str] = None) -> List[Dict]:
@@ -98,11 +145,23 @@ def format_date(date_str: str) -> str:
         return date_str
 
 
-def generate_markdown(projects: List[Dict]) -> str:
-    """Generate Jekyll-compatible Markdown page from project data."""
+def generate_markdown(projects: List[Dict], config: Dict) -> str:
+    """Generate Jekyll-compatible Markdown page from project data.
+    
+    Args:
+        projects: List of project data dictionaries
+        config: Page configuration dictionary
+    """
     
     # Sort projects by name
     projects = sorted(projects, key=lambda x: x["name"])
+    
+    # Extract styling configuration
+    styling = config.get("styling", {})
+    page_title = styling.get("page_title", "Rustedbytes Projects")
+    page_description = styling.get("page_description", "A collection of Rust-based projects")
+    header_emoji = styling.get("header_emoji", "🦀")
+    layout = config.get("layout", "default")
     
     # Generate project rows in Markdown table format
     project_rows = []
@@ -139,15 +198,18 @@ def generate_markdown(projects: List[Dict]) -> str:
     
     projects_table = "\n".join(project_rows)
     
+    # Build header with optional emoji
+    header = f"# {header_emoji} {page_title}" if header_emoji else f"# {page_title}"
+    
     # Generate Jekyll front matter and Markdown content
     markdown = f"""---
-layout: default
-title: Rustedbytes Projects
+layout: {layout}
+title: {page_title}
 ---
 
-# 🦀 Rustedbytes Projects
+{header}
 
-A collection of Rust-based projects
+{page_description}
 
 ---
 
@@ -173,6 +235,12 @@ Each project is built with Rust, focusing on performance, reliability, and devel
 def main():
     """Main function to generate the static page."""
     print("Starting page generation...")
+    
+    # Load page configuration
+    print("Loading page configuration...")
+    config = load_page_config()
+    print(f"Using layout: {config.get('layout')}")
+    print(f"Using theme: {config.get('theme')}")
     
     # Get GitHub token
     token = get_github_token()
@@ -209,7 +277,7 @@ def main():
     
     # Generate Markdown
     print("Generating Markdown...")
-    markdown = generate_markdown(projects)
+    markdown = generate_markdown(projects, config)
     
     # Write to file
     output_path = "index.md"
@@ -218,6 +286,8 @@ def main():
     
     print(f"Page generated successfully: {output_path}")
     print(f"Total projects: {len(projects)}")
+    print(f"Layout used: {config.get('layout')}")
+    print(f"Theme configured: {config.get('theme')}")
 
 
 if __name__ == "__main__":

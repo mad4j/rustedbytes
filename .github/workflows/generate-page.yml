@@ -31,7 +31,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install requests
+          pip install requests pyyaml
           
       - name: Generate page
         env:

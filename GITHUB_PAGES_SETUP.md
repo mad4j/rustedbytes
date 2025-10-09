@@ -114,17 +114,62 @@ Examples:
 
 ### Modify Page Design
 
-The page design can be customized in two places:
+The page design can be customized in multiple ways:
 
-**Option 1: Edit the Jekyll layout**
+**Option 1: Configure theme and layout (Recommended)**
 
-Edit `_layouts/default.html`:
+Edit `page_config.yml`:
+
+```yaml
+# Choose a layout: 'default', 'minimal', or create your own in _layouts/
+layout: default
+
+# Choose a theme: 'minima', or any supported Jekyll theme
+theme: minima
+
+# Customize styling options
+styling:
+  page_title: "Rustedbytes Projects"
+  page_description: "A collection of Rust-based projects"
+  header_emoji: "🦀"
+```
+
+You can also override settings using environment variables in the workflow:
+
+```yaml
+- name: Generate page
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    PAGE_LAYOUT: minimal        # Override layout
+    PAGE_THEME: custom          # Override theme
+    PAGE_TITLE: "My Projects"   # Override title
+  run: |
+    python scripts/generate_page.py
+```
+
+**Available Layouts:**
+
+- `default`: Modern gradient design with purple/blue theme
+- `minimal`: Terminal-style dark theme with green accents
+- Create your own by adding files to `_layouts/` directory
+
+**Option 2: Create custom layouts**
+
+Create a new file in `_layouts/` directory (e.g., `_layouts/custom.html`):
+
+- Copy from an existing layout (default.html or minimal.html)
+- Modify the HTML structure and CSS styles
+- Set `layout: custom` in `page_config.yml`
+
+**Option 3: Edit existing layouts**
+
+Edit `_layouts/default.html` or `_layouts/minimal.html`:
 
 - Modify the HTML structure
 - Update the CSS styles in the `<style>` tag
 - Colors, fonts, and layout can all be customized
 
-**Option 2: Edit the Markdown generation**
+**Option 4: Edit the Markdown generation**
 
 Edit `scripts/generate_page.py`:
 

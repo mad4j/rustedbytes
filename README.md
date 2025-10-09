@@ -14,6 +14,7 @@ This repository automatically generates a static web page that showcases all pro
 - **Automatic Updates**: Runs daily to keep information fresh
 - **Version Controlled**: Generated content is committed to the main branch for tracking and review
 - **Beautiful UI**: Modern, responsive design with a clean interface
+- **Configurable Themes**: Choose from multiple layouts or create custom themes via `page_config.yml`
 
 ## How It Works
 
@@ -31,13 +32,34 @@ This repository automatically generates a static web page that showcases all pro
 
 You can manually trigger the page generation from the GitHub Actions tab by running the "Generate Static Page with Jekyll" workflow.
 
+## Theme Customization
+
+The page design is configurable via the `page_config.yml` file:
+
+```yaml
+# Choose from available layouts: 'default' or 'minimal'
+layout: default
+
+# Customize page content
+styling:
+  page_title: "Rustedbytes Projects"
+  page_description: "A collection of Rust-based projects"
+  header_emoji: "🦀"
+```
+
+Available layouts:
+- **default**: Modern gradient design with purple/blue theme
+- **minimal**: Terminal-style dark theme with green accents
+
+You can also create custom layouts by adding new HTML files to the `_layouts/` directory. See [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md) for detailed customization instructions.
+
 ## Local Development
 
 To test the page generation locally:
 
 ```bash
 # Install dependencies
-pip install requests
+pip install requests pyyaml
 
 # Set your GitHub token (optional, but recommended to avoid rate limits)
 export GITHUB_TOKEN=your_token_here
