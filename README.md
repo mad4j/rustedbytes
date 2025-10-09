@@ -12,6 +12,7 @@ This repository automatically generates a static web page that showcases all pro
 - **Release Tracking**: Shows the latest release version and date from GitHub
 - **Crates.io Integration**: Displays the latest published version on crates.io where available
 - **Automatic Updates**: Runs daily to keep information fresh
+- **Version Controlled**: Generated content is committed to the main branch for tracking and review
 - **Beautiful UI**: Modern, responsive design with a clean interface
 
 ## How It Works
@@ -22,8 +23,9 @@ This repository automatically generates a static web page that showcases all pro
    - Retrieves the latest GitHub release
    - Checks crates.io for published versions
 4. Generates a Jekyll-compatible Markdown page with all the information
-5. GitHub Pages processes the Markdown using Jekyll
-6. Deploys the generated site to GitHub Pages
+5. Commits and pushes the generated `index.md` to the main branch
+6. GitHub Pages processes the Markdown using Jekyll
+7. Deploys the generated site to GitHub Pages
 
 ## Manual Trigger
 

@@ -37,8 +37,9 @@ This document explains how to enable GitHub Pages for the rustedbytes project.
      2. Collect release information
      3. Check crates.io for versions
      4. Generate a Jekyll-compatible Markdown page
-     5. Process the page with Jekyll
-     6. Deploy to GitHub Pages
+     5. Commit and push the generated `index.md` to the main branch
+     6. Process the page with Jekyll
+     7. Deploy to GitHub Pages
    - This usually takes 1-2 minutes
 
 7. **Access Your Page**
