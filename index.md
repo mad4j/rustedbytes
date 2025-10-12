@@ -26,6 +26,7 @@ Each project is built with Rust, focusing on performance, reliability, and devel
 | [**rustedbytes-nmea**](https://github.com/mad4j/rustedbytes-nmea) | Rust library for parsing NMEA messages from a GNSS receiver | [v0.1.0](https://github.com/mad4j/rustedbytes-nmea/releases/tag/v0.1.0) (2025-10-09) | [0.1.0](https://crates.io/crates/rustedbytes-nmea) |
 | [**rustedbytes-nocomment**](https://github.com/mad4j/rustedbytes-nocomment) | Commented code removal tool, obviously in Rust | _No releases_ | _Not published_ |
 | [**rustedbytes-pi**](https://github.com/mad4j/rustedbytes-pi) | Fast computation of PI digits in Rust | _No releases_ | [0.1.0](https://crates.io/crates/rustedbytes-pi) |
+| [**rustedbytes-randstuff**](https://github.com/mad4j/rustedbytes-randstuff) | Rust CLI tool for generating random junk | [v0.2.0](https://github.com/mad4j/rustedbytes-randstuff/releases/tag/v0.2.0) (2025-10-11) | [0.2.0](https://crates.io/crates/rustedbytes-randstuff) |
 | [**rustedbytes-sftp**](https://github.com/mad4j/rustedbytes-sftp) | Rust implementation of a simple SFTP server | _No releases_ | _Not published_ |
 | [**rustedbytes-sha**](https://github.com/mad4j/rustedbytes-sha) | SHA computation and verification in Rust | _No releases_ | _Not published_ |
 | [**rustedbytes-tris**](https://github.com/mad4j/rustedbytes-tris) | Tic-Tac-Toe implementation in Rust | [0.1.1](https://github.com/mad4j/rustedbytes-tris/releases/tag/0.1.1) (2025-04-26) | [0.1.1](https://crates.io/crates/rustedbytes-tris) |
@@ -35,4 +36,4 @@ Each project is built with Rust, focusing on performance, reliability, and devel
 
 *Generated from [@mad4j](https://github.com/mad4j) GitHub repositories*
 
-*Last updated: 2025-10-11 00:54:39 UTC*
+*Last updated: 2025-10-12 00:10:23 UTC*
